@@ -2,13 +2,12 @@ const readline = require('readline')
 
 let hero = { name: undefined, xp: undefined }
 
-// Logica para perguntar usando stdin e stdout
 const read = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 })
 
-function determinarRank(xp) {
+function getRank(xp) {
   switch (true) {
     case xp < 1000:
       return 'Ferro'
@@ -29,24 +28,24 @@ function determinarRank(xp) {
   }
 }
 
-function checar_numero(string) {
+function checkNumber(string) {
   if (typeof string != 'string') return false
   return !isNaN(string) && !isNaN(parseFloat(string))
 }
 
-function get_journey_days(redo) {
+function getJourneyDays(redo) {
   read.question(
     `Interessante ${name}, A quantos dias está caminhando nessa estrada de aventuras? `,
     answer_days => {
-      if (!checar_numero(answer_days)) {
+      if (!checkNumber(answer_days)) {
         console.log(
           'Parece que isso não é um numero de dias... sinto que estou sendo enganado.\n'
         )
-        get_journey_days(true)
+        getJourneyDays(true)
       } else {
         xp = answer_days * 100
         console.log(
-          `Vejo que o heroi com quem falo, de nome ${name}, adquiriu experiencia e alcançou o nivel ${determinarRank(
+          `Vejo que o heroi com quem falo, de nome ${name}, adquiriu experiencia e alcançou o nivel ${getRank(
             xp
           )}`
         )
@@ -57,5 +56,5 @@ function get_journey_days(redo) {
 
 read.question('Qual é seu nome bravo heroi? ', answer_name => {
   name = answer_name
-  get_journey_days(false)
+  getJourneyDays(false)
 })

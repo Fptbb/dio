@@ -1,60 +1,30 @@
-const readline = require('readline')
-
-let hero = { name: undefined, xp: undefined }
-
-const read = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
-
-function getRank(xp) {
+function getRank(saldo) {
   switch (true) {
-    case xp < 1000:
+    case saldo < 10:
       return 'Ferro'
-    case xp <= 2000:
+    case saldo <= 20:
       return 'Bronze'
-    case xp <= 5000:
+    case saldo <= 50:
       return 'Prata'
-    case xp <= 7000:
+    case saldo <= 80:
       return 'Ouro'
-    case xp <= 8000:
-      return 'Platina'
-    case xp <= 9000:
-      return 'Ascendente'
-    case xp <= 10000:
+    case saldo <= 90:
+      return 'Diamante'
+    case saldo <= 100:
+      return 'Lendário'
+    case saldo >= 101:
       return 'Imortal'
-    case xp >= 10001:
-      return 'Radiante'
   }
 }
 
-function checkNumber(string) {
-  if (typeof string != 'string') return false
-  return !isNaN(string) && !isNaN(parseFloat(string))
+function calcularSaldo(vitorias, derrotas) {
+  return vitorias - derrotas
 }
 
-function getJourneyDays(redo) {
-  read.question(
-    `Interessante ${name}, A quantos dias está caminhando nessa estrada de aventuras? `,
-    answer_days => {
-      if (!checkNumber(answer_days)) {
-        console.log(
-          'Parece que isso não é um numero de dias... sinto que estou sendo enganado.\n'
-        )
-        getJourneyDays(true)
-      } else {
-        xp = answer_days * 100
-        console.log(
-          `Vejo que o heroi com quem falo, de nome ${name}, adquiriu experiencia e alcançou o nivel ${getRank(
-            xp
-          )}`
-        )
-      }
-    }
-  )
-}
+const vitorias = 58
+const derrotas = 20
 
-read.question('Qual é seu nome bravo heroi? ', answer_name => {
-  name = answer_name
-  getJourneyDays(false)
-})
+const saldo = calcularSaldo(vitorias, derrotas)
+const rank = getRank(saldo)
+
+console.log(`O Herói tem de saldo de ${saldo} está no nível de ${rank}`)
